@@ -7,6 +7,7 @@ var template = _.template(multiline(function() {
   /*
      <a href="<%= url %>" rel="grouped" title="<%= title %>" target="_self" class="fancybox-md">
        <!--<img src="<%= url %>" alt="<%= title %>"></img>-->
+       <!-- _blank -->
      </a>
    */
 }));
@@ -28,6 +29,10 @@ module.exports = {
   },
   hooks: {
     page: function(page) {
+
+      // retrieve special chain
+      console.log("just debug-----", page);
+
       var $ = cheerio.load(page.content);
 
       $('.fancybox-md').each(function(index, mdContent) {
@@ -47,6 +52,8 @@ module.exports = {
       });*/
 
       page.content = $.html();
+
+      page.content;
 
       return page;
     }
