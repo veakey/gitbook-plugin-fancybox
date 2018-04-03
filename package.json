@@ -1,7 +1,7 @@
 {
-  "name": "gitbook-plugin-fancybox",
-  "version": "3.0.1",
-  "description": "A gitbook plugin to show image by graceful jQuery fancy box",
+  "name": "gitbook-plugin-fancybox-md",
+  "version": "3.0.2",
+  "description": "A gitbook plugin to show md file by graceful jQuery fancy box",
   "keywords": [
     "gitbook",
     "plugin",
@@ -26,12 +26,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ly-tools/gitbook-plugin-fancybox.git"
+    "url": "https://github.com/veakey/gitbook-plugin-fancybox-md.git"
   },
   "bugs": {
-    "url": "https://github.com/ly-tools/gitbook-plugin-fancybox/issues"
+    "url": "https://github.com/veakey/gitbook-plugin-fancybox-md/issues"
   },
-  "homepage": "https://github.com/ly-tools/gitbook-plugin-fancybox",
+  "homepage": "https://github.com/veakey/gitbook-plugin-fancybox-md.git",
   "publishConfig": {
     "registry": "http://registry.npmjs.org/"
   },
