@@ -1,21 +1,11 @@
-# gitbook-plugin-fancybox
+# gitbook-plugin-fancybox-md
 
-[![Build Status](https://travis-ci.org/ly-tools/gitbook-plugin-fancybox.png)](https://travis-ci.org/ly-tools/gitbook-plugin-fancybox)
-[![Dependency Status](https://david-dm.org/ly-tools/gitbook-plugin-fancybox.svg)](https://david-dm.org/ly-tools/gitbook-plugin-fancybox)
-[![devDependency Status](https://david-dm.org/ly-tools/gitbook-plugin-fancybox/dev-status.svg)](https://david-dm.org/ly-tools/gitbook-plugin-fancybox#info=devDependencies)
-[![NPM version](http://img.shields.io/npm/v/gitbook-plugin-fancybox.svg?style=flat-square)](http://npmjs.org/package/gitbook-plugin-fancybox)
-[![node](https://img.shields.io/badge/node.js-%3E=_0.12-green.svg?style=flat-square)](http://nodejs.org/download/)
-[![License](http://img.shields.io/npm/l/gitbook-plugin-fancybox.svg?style=flat-square)](LICENSE)
-[![npm download](https://img.shields.io/npm/dm/gitbook-plugin-fancybox.svg?style=flat-square)](https://npmjs.org/package/gitbook-plugin-fancybox)
-
-A gitbook plugin to show image by graceful jQuery fancy box
-
-[DEMO](http://read.lingyu.wang/webkit-core/webkit-arch-and-module.html)
+A gitbook plugin to show md file by graceful jQuery fancy box
 
 ## Install
 
 ```shell
-$npm install --save gitbook-plugin-fancybox
+$npm install --save gitbook-plugin-fancybox-md
 ```
 
 ## Usage
@@ -24,7 +14,7 @@ Add the plugin to your `book.json` like this:
 
 ```javascript
 {
-    "plugins": ["fancybox"]
+    "plugins": ["fancybox-md"]
 }
 ```
 
@@ -51,8 +41,6 @@ defaultConfig:
 ## License
 
 The MIT License (MIT)
-
-Copyright (c) 2015 Lingyu Wang
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
