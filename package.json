@@ -1,6 +1,6 @@
 {
   "name": "gitbook-plugin-fancybox-md",
-  "version": "3.0.3",
+  "version": "3.0.31",
   "description": "A gitbook plugin to show md file by graceful jQuery fancy box",
   "keywords": [
     "gitbook",
