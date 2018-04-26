@@ -1,80 +1,78 @@
+
 'use strict';
 var cheerio = require('cheerio');
 var _ = require('underscore');
 var multiline = require('multiline');
 
+var fs = require('fs-extra');
+
 var template = _.template(multiline(function() {
-    /*
-       <a href="<%= url %>" rel="grouped" title="<%= title %>" target="_self" class="fancybox-md">
-         <!--<img src="<%= url %>" alt="<%= title %>"></img>-->
-         <!-- _blank -->
-         <%= title %>
-       </a>
-     */
+  /*
+     <a href="" rel="grouped" title="<%= title %>" target="_self" class="fancybox-md" target-id="fancybox-md-data-<%= index %>">
+       <%= title %>
+     </a>
+     <div style="display:none" id="fancybox-md-data-<%= index %>">
+       <div class="markdown-section code" style="color: #718c00">
+        <%= content %>
+       </div>
+     </div>
+   */
 }));
 
 var TO_SEEK = "!_fancybox-md";
 
 module.exports = {
-    book: {
-        assets: './assets',
-        js: [
-            'jquery.min.js',
-            'jquery.mousewheel.pack.js',
-            'jquery.fancybox.pack.js',
-            'jquery.fancybox-buttons.js',
-            'plugin.js'
-        ],
-        css: [
-            'jquery.fancybox.css',
-            'jquery.fancybox-buttons.css'
-        ]
-    },
-    hooks: {
-        page: function(page) {
+  book: {
+    assets: './assets',
+    js: [
+      'jquery.min.js',
+      'jquery.mousewheel.pack.js',
+      'jquery.fancybox.pack.js',
+      'jquery.fancybox-buttons.js',
+      'plugin.js'
+    ],
+    css: [
+      'jquery.fancybox.css',
+      'jquery.fancybox-buttons.css',
+      'hide-content.css'
+    ]
+  },
+  hooks: {
+    page: async function(page) {
 
-            var $ = cheerio.load(page.content);
+      var me = this;
+      var $ = cheerio.load(page.content);
+      var { rawPath } = page;
 
-            // since it's only available for hyper links
-            $('a').each(function(index, aEl) {
-                //if (page.title === 'Functions') {
-                if (aEl.attribs.href.indexOf(TO_SEEK) > -1){
-                    console.log('YEAH ----', aEl);
-                    const $aEl = $(aEl);
-                    $aEl.addClass('fancybox-md');
-                    $aEl.attr("href", aEl.attribs.href.replace(TO_SEEK, ''));
+      // since it's only available for hyper links
+      await $('a').each(function(index, aEl) {
+        if (aEl.attribs.href.indexOf(TO_SEEK) > -1){
+          var baseLink = aEl.attribs.href;
+          var targetLink = baseLink.replace(TO_SEEK, '');
+          var $aEl = $(this)
+          $aEl.addClass('fancybox-md');
 
-                    $aEl.replaceWith(template({
-                        url: $aEl.attr('src'),
-                        title: $aEl.html()
-                    }));
-                }
+          var basePath = rawPath.substring(0, rawPath.lastIndexOf('/') + 1);
+          var absoluteFileName = basePath + targetLink;
 
+          $aEl.attr("href", ``);
+          $aEl.attr("target-id", `fancybox-md-data-${index}`);
+          var mdContent = fs.readFileSync(absoluteFileName, 'utf-8');
 
-                //}
-
-
+          me.renderBlock('markdown', mdContent)
+            .then((data) => {
+              $aEl.replaceWith(template({
+                index,
+                title: $aEl.html(),
+                content: data
+              }));
             });
-
-            /*$('.fancybox-md').each(function(index, mdContent) {
-              var $mdContent = $(mdContent);
-              $mdContent.replaceWith(template({
-                content: $mdContent.attr('href'),
-                title: $mdContent.attr('title')
-              }));
-            });*/
-
-            /*$('img').each(function(index, img) {
-              var $img = $(img);
-              $img.replaceWith(template({
-                url: $img.attr('src'),
-                title: $img.attr('alt')
-              }));
-            });*/
-
-            page.content = $.html();
-
-            return page;
         }
+      });
+
+      page.content = $.html();
+
+      return page;
     }
+  }
 };
